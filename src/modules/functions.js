@@ -1,15 +1,7 @@
 import Task from './Task.js';
 import { setStatus } from './statusUpdate.js';
 
-const localData = JSON.parse(localStorage.getItem('tasks'));
-
-let allTasks;
-
-if (localData) {
-  allTasks = localData;
-} else {
-  allTasks = [];
-}
+const allTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
 const showMenu = (element) => {
   const parent = element.parentElement;
@@ -86,7 +78,6 @@ const showTasks = () => {
 
   inputs.forEach((e) => {
     e.addEventListener('change', (ev) => {
-      ev.stopImmediatePropagation();
       const { index } = ev.target.dataset;
       setStatus(allTasks, index);
       showTasks();
@@ -101,7 +92,6 @@ const showTasks = () => {
 
   editBtn.forEach((e) => {
     e.addEventListener('click', (ev) => {
-      ev.stopImmediatePropagation();
       const closest = ev.target.closest('[data-index]');
       const { index } = closest.dataset;
       const selectedTask = allTasks[index];
